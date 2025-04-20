@@ -15,8 +15,7 @@ export async function action({ request }) {
   }
 
   try {
-    const record = await pb.collection("users").create(formData);
-    console.log(record);
+    await pb.collection("users").create(formData);
     return redirect(SITES_URLS.login);
   } catch (error) {
     console.log(error);

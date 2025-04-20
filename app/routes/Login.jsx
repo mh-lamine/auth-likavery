@@ -27,8 +27,6 @@ export async function action({ request }) {
       .collection("users")
       .authWithPassword(email, password);
 
-      console.log(record, SITES_URLS[record.role]);
-
     return redirect(SITES_URLS[record.role], {
       headers: {
         "Set-Cookie": `authData=${JSON.stringify({
