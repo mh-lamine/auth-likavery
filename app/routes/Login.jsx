@@ -23,16 +23,20 @@ export async function action({ request }) {
   }
 
   try {
-    const { record, token } = await pb
+    const { record } = await pb
       .collection("users")
       .authWithPassword(email, password);
 
     return redirect(SITES_URLS[record.role], {
       headers: {
-        "Set-Cookie": `authData=${JSON.stringify({
-          token,
-          record,
-        })}; HttpOnly; Path=*; Max-Age=2592000; SameSite=Lax; `,
+        "Set-Cookie": pb.authStore.exportToCookie({
+          domain: "localhost",
+          httpOnly: true,
+          secure: true,
+          sameSite: "Lax",
+          path: "/",
+          // maxAge: 2592000,
+        }),
       },
     });
   } catch (error) {
